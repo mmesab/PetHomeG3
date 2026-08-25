@@ -81,11 +81,40 @@ h1 {
 }
 
 @media (max-width:480px) {
-    main {
-        padding: 12px
-    }
-
-    h1 {
-        font-size: 18px
-    }
+    main { padding: 12px }
+    h1 { font-size: 18px }
 }
+
+/* Button base - harmonized look for all buttons */
+button, .pet-filters button, .primary, .danger, .favorite-btn, .back-btn {
+    font-family: inherit;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 0;
+    cursor: pointer;
+    transition: background .15s ease, transform .12s ease, opacity .12s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+button:disabled, .primary:disabled { cursor: not-allowed; opacity: 0.65 }
+
+.primary { background: #2563eb; color: white }
+.danger { background: #ef4444; color: white; padding: 6px 10px }
+.favorite-btn { background: #fff; border: 1px solid #e6edf8; color: #0f172a }
+.favorite-btn.active { background: #dbeafe; border-color: #60a5fa }
+.back-btn { background: transparent; border: 0; color: #2563eb; padding: 6px 8px }
+
+.form-status { color: #065f46; margin-left: 8px }
+.pet-detail h2 { margin: 6px 0 }
+.muted { color: #6b7280 }
+.adoptions-list { list-style: none; padding: 0; margin: 8px 0 0 0; display: flex; flex-direction: column; gap: 10px }
+.adoption-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-radius: 8px; background: #fff; box-shadow: 0 6px 18px rgba(15,23,42,0.04) }
+
+.pet-card { cursor: pointer }
+.pet-card:focus { outline: 2px solid #bfdbfe }
+.pet-card:hover { transform: translateY(-4px); transition: transform .18s ease }
+
+.pet-filters button { background: #eef2ff; color: #1f2937 }
+.pet-filters button:hover { background: #e0e7ff; transform: translateY(-1px) }
