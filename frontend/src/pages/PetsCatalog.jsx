@@ -6,6 +6,7 @@ import PetFilters from '../components/PetFilters';
 export default function PetsCatalog() {
     const [filters, setFilters] = useState({
         species: '',
+        province: '',
         status: ''
     });
 
@@ -14,11 +15,13 @@ export default function PetsCatalog() {
         setFilters(prev => ({ ...prev, [name]: value }));
     };
 
-    // Filtrado visual local para el Día 1
+    // Conexión y filtrado por especie, provincia y estado
     const filteredPets = mockPets.filter(pet => {
-        const matchesSpecies = !filters.species || pet.species === filters.species;
-        const matchesStatus = !filters.status || pet.status === filters.status;
-        return matchesSpecies && matchesStatus;
+        const matchesSpecies = !filters.species || pet.species.toLowerCase() === filters.species.toLowerCase();
+        const matchesProvince = !filters.province || pet.province.toLowerCase() === filters.province.toLowerCase();
+        const matchesStatus = !filters.status || pet.status.toLowerCase() === filters.status.toLowerCase();
+
+        return matchesSpecies && matchesProvince && matchesStatus;
     });
 
     return (
