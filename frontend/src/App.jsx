@@ -7,6 +7,9 @@ import CenterDetail from './pages/CenterDetail';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ProtectedRoute from './components/ProtectedRoute';
+import CenterDashboard from './pages/CenterDashboard';
+
+
 
 function Navigation({ user, onLogout }) {
   const navigate = useNavigate();
@@ -96,6 +99,10 @@ export default function App() {
 
             {/* Ruta no autorizada / Fallback */}
             <Route path="/unauthorized" element={<h2>No tienes permisos para acceder a esta sección.</h2>} />
+
+            <Route element={<ProtectedRoute allowedRoles={['CENTRO']} />}>
+              <Route path="/center/dashboard" element={<CenterDashboard />} />
+            </Route>
           </Routes>
         </main>
       </div>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import AdoptionStatusBadge from '../components/AdoptionStatusBadge';
 
 export default function MyAdoptions() {
     const [adoptions, setAdoptions] = useState([]);
@@ -64,16 +65,8 @@ export default function MyAdoptions() {
                                 <p style={{ margin: '2px 0', fontSize: '14px', fontStyle: 'italic' }}>"{item.notes}"</p>
                             </div>
                             
-                            <span style={{
-                                backgroundColor: item.status === 'PENDING' ? '#ffc107' : '#28a745',
-                                color: '#212529',
-                                padding: '4px 12px',
-                                borderRadius: '12px',
-                                fontSize: '12px',
-                                fontWeight: 'bold'
-                            }}>
-                                {item.status === 'PENDING' ? 'Pendiente' : item.status}
-                            </span>
+                            {/* Componente Reutilizable de Estado */}
+                            <AdoptionStatusBadge status={item.status} />
 
                             {/* Botón de Cancelación */}
                             <button
