@@ -1,53 +1,77 @@
 import { useState } from 'react';
 
 export default function AdoptionForm({ pet, onClose, onSubmitSuccess }) {
-    const [message, setMessage] = useState('');
-    const [error, setError] = useState('');
+    const [notes, setNotes] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!message.trim()) {
-            setError('El mensaje para el centro no puede estar vacío.');
-            return;
-        }
 
-        const mockNewAdoption = {
+        const newAdoption = {
             id: Date.now(),
             petId: pet.id,
             petName: pet.name,
-            centerName: pet.centerName || 'Centro de adopción',
-            message: message,
+            petImage: pet.imageUrl,
             status: 'PENDING',
-            createdAt: new Date().toISOString()
+            notes: notes,
+            createdAt: new Date().toLocaleDateString('es-ES')
         };
 
-        onSubmitSuccess(mockNewAdoption);
+        onSubmitSuccess(newAdoption);
     };
 
     return (
-        <div style={{ border: '1px solid #ccc', padding: '16px', borderRadius: '8px', background: '#f9f9f9', marginTop: '16px' }}>
-            <h3>Solicitud de adopción para {pet.name}</h3>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <form onSubmit={handleSubmit}>
-                <div style={{ marginBottom: '12px' }}>
-                    <label style={{ display: 'block', marginBottom: '6px' }}>Mensaje para el centro:</label>
-                    <textarea
-                        rows="4"
-                        style={{ width: '100%', padding: '8px' }}
-                        placeholder="Cuenta un poco sobre tu hogar y por qué quieres adoptarla..."
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                    />
-                </div>
-                <div style={{ display: 'flex', gap: '8px' }}>
-                    <button type="submit" style={{ background: '#28a745', color: '#fff', padding: '8px 16px', border: 'none', borderRadius: '4px' }}>
-                        Enviar solicitud
-                    </button>
-                    <button type="button" onClick={onClose} style={{ background: '#6c757d', color: '#fff', padding: '8px 16px', border: 'none', borderRadius: '4px' }}>
-                        Cancelar
-                    </button>
-                </div>
-            </form>
+        <div style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000
+        }}>
+            <div style={{
+                backgroundColor: '#fff',
+                padding: '24px',
+                borderRadius: '8px',
+                maxWidth: '500px',
+                width: '90%'
+            }}>
+                <h3 style={{ marginTop: 0 }}>Solicitud de adopción para {pet.name}</h3>
+                <form onSubmit={handleSubmit}>
+                    <div style={{ marginBottom: '16px' }}>
+                        <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>
+                            ¿Por qué te gustaría adoptar a esta mascota?
+                        </label>
+                        <textarea
+                            value={notes}
+                            onChange={(e) => setNotes(e.target.value)}
+                            required
+                            rows={4}
+                            placeholder="Cuéntanos un poco sobre tu hogar, experiencia previa..."
+                            style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+                        />
+                    </div>
+
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            style={{ padding: '8px 16px', background: '#6c757d', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                        >
+                            Cancelar
+                        </button>
+                        <button
+                            type="submit"
+                            style={{ padding: '8px 16px', background: '#28a745', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+                        >
+                            Enviar Solicitud
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 }

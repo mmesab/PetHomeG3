@@ -1,24 +1,41 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function FavoriteButton({ petId, initialIsFavorite = false }) {
-    const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
+export default function FavoriteButton({ petId }) {
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    useEffect(() => {
+        const favorites = JSON.parse(localStorage.getItem('mock_favorites') || '[]');
+        setIsFavorite(favorites.includes(petId));
+    }, [petId]);
 
     const toggleFavorite = () => {
+        const favorites = JSON.parse(localStorage.getItem('mock_favorites') || '[]');
+        let updated;
+
+        if (favorites.includes(petId)) {
+            updated = favorites.filter(id => id !== petId);
+        } else {
+            updated = [...favorites, petId];
+        }
+
+        localStorage.setItem('mock_favorites', JSON.stringify(updated));
         setIsFavorite(!isFavorite);
-        // Simulación del evento de guardado
-        console.log(`Pet ${petId} favorite state set to: ${!isFavorite}`);
     };
 
     return (
         <button
             onClick={toggleFavorite}
             style={{
-                padding: '8px 16px',
-                backgroundColor: isFavorite ? '#ff4d4f' : '#e0e0e0',
-                color: isFavorite ? '#fff' : '#000',
+                backgroundColor: isFavorite ? '#dc3545' : '#e9ecef',
+                color: isFavorite ? '#fff' : '#495057',
                 border: 'none',
+                padding: '8px 16px',
                 borderRadius: '4px',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px'
             }}
         >
             {isFavorite ? '❤️ En Favoritos' : '🤍 Añadir a Favoritos'}
