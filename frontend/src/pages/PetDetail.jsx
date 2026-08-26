@@ -29,12 +29,26 @@ export default function PetDetail() {
         <div style={{ padding: '24px', maxWidth: '800px', margin: '0 auto', fontFamily: 'sans-serif' }}>
             <h2>{pet.name} ({pet.species === 'DOG' ? 'Perro' : 'Gato'})</h2>
 
+            {/* Imagen de la mascota */}
+            <img
+                src={pet.imageUrl || 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=500'}
+                alt={pet.name}
+                style={{
+                    width: '100%',
+                    maxHeight: '400px',
+                    objectFit: 'cover',
+                    borderRadius: '8px',
+                    marginBottom: '20px'
+                }}
+            />
+
+            {/* Botones de acción */}
             <div style={{ margin: '16px 0', display: 'flex', gap: '12px' }}>
                 <FavoriteButton petId={pet.id} />
                 {pet.status === 'AVAILABLE' ? (
                     <button
                         onClick={() => setShowAdoptionForm(true)}
-                        style={{ background: '#007bff', color: '#fff', padding: '8px 16px', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                        style={{ background: '#007bff', color: '#fff', padding: '8px 16px', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
                     >
                         Quiero adoptarla
                     </button>
@@ -45,7 +59,8 @@ export default function PetDetail() {
                 )}
             </div>
 
-            <div style={{ lineHieght: '1.6' }}>
+            {/* Ficha técnica */}
+            <div style={{ lineHeight: '1.6' }}>
                 <p><strong>Raza:</strong> {pet.breed}</p>
                 <p><strong>Sexo:</strong> {pet.sex === 'FEMALE' ? 'Hembra' : 'Macho'}</p>
                 <p><strong>Tamaño:</strong> {pet.size}</p>
@@ -54,6 +69,7 @@ export default function PetDetail() {
                 <p><strong>Descripción:</strong> {pet.description}</p>
             </div>
 
+            {/* Modal/Formulario de adopción */}
             {showAdoptionForm && (
                 <AdoptionForm
                     pet={pet}

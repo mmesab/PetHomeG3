@@ -1,36 +1,31 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import PetsCatalog from './pages/PetsCatalog';
 import PetDetail from './pages/PetDetail';
 import MyAdoptions from './pages/MyAdoptions';
-
-// Componente temporal si el Alumno A aún no termina PetsCatalog
-function PetsCatalogMock() {
-  return (
-    <div style={{ padding: '24px' }}>
-      <h2>Catálogo de Mascota (Vista previa)</h2>
-      <p>Haz clic para probar la vista de detalle del Alumno B:</p>
-      <Link to="/pets/1" style={{ fontSize: '18px', color: '#007bff' }}>
-        👉 Ver Ficha de Luna (ID 1)
-      </Link>
-    </div>
-  );
-}
 
 export default function App() {
   return (
     <BrowserRouter>
-      {/* Barra de navegación sencilla */}
-      <nav style={{ padding: '16px', background: '#333', color: '#fff', display: 'flex', gap: '20px' }}>
-        <Link to="/pets" style={{ color: '#fff', textDecoration: 'none' }}>Catálogo</Link>
-        <Link to="/adoptions" style={{ color: '#fff', textDecoration: 'none' }}>Mis Solicitudes</Link>
-      </nav>
+      <div style={{ fontFamily: 'sans-serif', minHeight: '100vh', backgroundColor: '#f8f9fa' }}>
+        {/* Navegación Principal */}
+        <nav style={{ background: '#2c3e50', padding: '1rem 2rem', display: 'flex', gap: '20px', alignItems: 'center' }}>
+          <h1 style={{ color: '#fff', margin: 0, fontSize: '1.5rem' }}>🐾 PetHome</h1>
+          <div style={{ display: 'flex', gap: '15px' }}>
+            <Link to="/pets" style={{ color: '#ecf0f1', textDecoration: 'none', fontWeight: 'bold' }}>Catálogo</Link>
+            <Link to="/adoptions" style={{ color: '#ecf0f1', textDecoration: 'none', fontWeight: 'bold' }}>Mis Solicitudes</Link>
+          </div>
+        </nav>
 
-      {/* Definición de Rutas */}
-      <Routes>
-        <Route path="/" element={<PetsCatalogMock />} />
-        <Route path="/pets" element={<PetsCatalogMock />} />
-        <Route path="/pets/:id" element={<PetDetail />} />
-        <Route path="/adoptions" element={<MyAdoptions />} />
-      </Routes>
+        {/* Definición de Rutas */}
+        <main style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
+          <Routes>
+            <Route path="/" element={<PetsCatalog />} />
+            <Route path="/pets" element={<PetsCatalog />} />
+            <Route path="/pets/:id" element={<PetDetail />} />
+            <Route path="/adoptions" element={<MyAdoptions />} />
+          </Routes>
+        </main>
+      </div>
     </BrowserRouter>
   );
 }
