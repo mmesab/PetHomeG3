@@ -1,25 +1,21 @@
-import { petsMock } from '../mocks/pets.mock.js'
+// Fetch-based pet service pointing to backend API
 
-// Simulate a backend service for pets using the local mock data.
-// Accepts a `filters` object: { type, q }
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:4000'
+
 export const getPets = async (filters = {}) => {
-  const { type, q } = filters
-  // simulate latency
-  await new Promise((res) => setTimeout(res, 450))
+  const params = new URLSearchParams()
+  if (filters.type) params.set('type', filters.type)
+  if (filters.q) params.set('q', filters.q)
 
-  let data = petsMock.slice()
-  if (type && type !== 'all') {
-    data = data.filter((p) => p.type === type)
-  }
-  if (q) {
-    const term = q.toLowerCase()
-    data = data.filter((p) => (p.name + ' ' + p.breed).toLowerCase().includes(term))
-  }
-
-  return data
+  const res = await fetch(`${API_BASE}/api/pets?${params.toString()}`)
+  if (!res.ok) throw new Error('Failed to fetch pets')
+  const body = await res.json()
+  return body.pets || []
 }
 
 export const getPetById = async (id) => {
-  await new Promise((res) => setTimeout(res, 200))
-  return petsMock.find((p) => String(p.id) === String(id)) || null
+  const res = await fetch(`${API_BASE}/api/pets/${id}`)
+  if (!res.ok) return null
+  const body = await res.json()
+  return body.pet || null
 }

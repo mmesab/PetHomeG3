@@ -28,8 +28,8 @@ const MyAdoptions = () => {
         {items.map((a) => (
           <li key={a.id} className="adoption-item">
             <div>
-              <strong>{a.petName || 'Mascota'}</strong>
-              <div className="muted">{a.status || 'Pendiente'}</div>
+              <strong>Mascota #{a.pet_id}</strong>
+              <div className="muted">{a.status || 'Pendiente'}{a.created_at ? ` • Solicitado: ${new Date(a.created_at).toLocaleString()}` : ''}</div>
             </div>
             <div>
               <button className="danger" onClick={() => handleCancel(a.id)}>Cancelar</button>
